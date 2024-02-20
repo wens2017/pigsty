@@ -130,6 +130,10 @@
     - name: check postgres replica ready
       become_user: "{{ pg_dbsu }}"
       command: /usr/pgsql/bin/pg_isready -p {{ pg_port }}
+      retries: 100
+      delay: 3
+      register: result
+      until: result.rc == 0
 
 
 #--------------------------------------------------------------#
